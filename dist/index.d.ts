@@ -1,1 +1,1 @@
-export { ExpressWebAdaptor } from "./src/ExpressWebAdaptor";
+export { Adaptor } from "./src/Adaptor";
