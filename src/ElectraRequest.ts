@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { ParsedQueryParam, ParsedQueryParams, RequestInterface } from "@electra/web";
 
-export class ExpressRequestProvider implements RequestInterface
+export class ElectraRequest implements RequestInterface
 {
   private readonly request: Request;
   

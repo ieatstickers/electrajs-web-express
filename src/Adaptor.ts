@@ -4,12 +4,12 @@ import {
   NextFunction as ExpressNextFunction,
   RequestHandler as ExpressRequestHandler
 } from "express";
-import { AbstractEndpoint, Request, RequestInterface, Response, ResponseInterface } from "@electra/web";
-import { ExpressRequestProvider } from "./ExpressRequestProvider";
-import { ExpressResponseProvider } from "./ExpressResponseProvider";
+import { AbstractEndpoint, RequestInterface, ResponseInterface } from "@electra/web";
+import { ElectraRequest } from "./ElectraRequest";
+import { ElectraResponse } from "./ElectraResponse";
 import { NextFunction } from "./Type/NextFunction";
 
-export class ExpressWebAdaptor
+export class Adaptor
 {
   public middleware(
     handler: (req: RequestInterface, res: ResponseInterface, next: NextFunction) => void
@@ -24,12 +24,12 @@ export class ExpressWebAdaptor
     if (handler.length === 4)
     {
       return (err: Error, req: ExpressRequest, res: ExpressResponse, next: ExpressNextFunction) => {
-        return handler(err, new Request(new ExpressRequestProvider(req)), new Response(new ExpressResponseProvider(res)), next);
+        return handler(err, new ElectraRequest(req), new ElectraResponse(res), next);
       }
     }
     
     return (req: ExpressRequest, res: ExpressResponse, next: ExpressNextFunction) => {
-      return handler(new Request(new ExpressRequestProvider(req)), new Response(new ExpressResponseProvider(res)), next);
+      return handler(new ElectraRequest(req), new ElectraResponse(res), next);
     }
   }
   
@@ -46,12 +46,12 @@ export class ExpressWebAdaptor
     if (handler.length === 3)
     {
       return (req: ExpressRequest, res: ExpressResponse, next: ExpressNextFunction) => {
-        handler(new Request(new ExpressRequestProvider(req)), new Response(new ExpressResponseProvider(res)), next);
+        handler(new ElectraRequest(req), new ElectraResponse(res), next);
       };
     }
     
     return (req: ExpressRequest, res: ExpressResponse) => {
-      handler(new Request(new ExpressRequestProvider(req)), new Response(new ExpressResponseProvider(res)));
+      handler(new ElectraRequest(req), new ElectraResponse(res));
     };
   }
   
@@ -72,7 +72,7 @@ export class ExpressWebAdaptor
         );
         const response = await endpointInstance.execute();
         
-        if (response instanceof Response)
+        if (response instanceof ElectraResponse)
         {
           return response.send();
         }

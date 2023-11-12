@@ -307,10 +307,10 @@
   resolved "https://registry.yarnpkg.com/@electra/core/-/core-1.1.0.tgz#20dd1ee2cf7aa6127f2ceef18bad3ab15aca1da5"
   integrity sha512-HZ9rVzhg8r84+6gxJe2iKUiSD74OGid0ioK0p9hEF8bwo7C0KqAG8mEJ62oFWIQsvLgM19EL0EDJXoraz83XMQ==
 
-"@electra/web@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@electra/web/-/web-1.1.2.tgz#3c58157d3fc9a6f15fb60834f04b2c51c58df448"
-  integrity sha512-FF7IuKSSca2sjidllRgUwIYrAKUuTEwss/BD8tWvHJnIbVMLqM3AzG6zLhPV79i4bxjemGQYhzTFBSXJhEsEyQ==
+"@electra/web@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@electra/web/-/web-1.2.0.tgz#1153a28c64244a016ab05b592b4d75936c30e9bf"
+  integrity sha512-Iw/d5bHjwCLWcorBNxNcPuZltDdIRY+VqvYXHUULxsviqJ3hYpCyqgNM9BscJKQOtBCX0HaGXTmMKHaXBiKjgA==
   dependencies:
     "@electra/core" "^1.0.0"
 

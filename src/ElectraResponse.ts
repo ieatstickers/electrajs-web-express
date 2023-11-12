@@ -2,7 +2,7 @@
 import { Response } from "express";
 import { ResponseHeaders, ResponseInterface } from "@electra/web";
 
-export class ExpressResponseProvider implements ResponseInterface
+export class ElectraResponse implements ResponseInterface
 {
   private readonly response: Response;
   

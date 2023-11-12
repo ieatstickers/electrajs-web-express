@@ -1,16 +1,17 @@
 import { PublicProperties } from "@electra/core";
-import { ExpressWebAdaptor } from "./ExpressWebAdaptor";
-import { AbstractEndpoint, Response } from "@electra/web";
+import { Adaptor } from "./Adaptor";
+import { AbstractEndpoint } from "@electra/web";
 import { MockExpressRequest } from "./Mock/MockExpressRequest";
 import { MockExpressResponse } from "./Mock/MockExpressResponse";
 import { AbstractPayload } from "@electra/core";
+import { ElectraResponse } from "./ElectraResponse";
 
-describe("ExpressWebAdaptor", () => {
+describe("Adaptor", () => {
   
-  let adaptor: ExpressWebAdaptor;
+  let adaptor: Adaptor;
   
   beforeEach(() => {
-    adaptor = new ExpressWebAdaptor();
+    adaptor = new Adaptor();
   });
   
   afterEach(() => {
@@ -96,7 +97,7 @@ describe("ExpressWebAdaptor", () => {
 
     it("calls response.send() if the endpoint returns a Response instance", async () => {
 
-      const send = jest.spyOn(Response.prototype, "send");
+      const send = jest.spyOn(ElectraResponse.prototype, "send");
 
       class TestEndpoint extends AbstractEndpoint<TestPayload, any>
       {
@@ -131,7 +132,7 @@ describe("ExpressWebAdaptor", () => {
         }
       }
 
-      const jsonMethod = jest.spyOn(Response.prototype, 'json');
+      const jsonMethod = jest.spyOn(ElectraResponse.prototype, 'json');
       const route = adaptor.endpoint(JsonTestEndpoint);
       await route(new MockExpressRequest() as any, new MockExpressResponse() as any, () => {});
       expect(jsonMethod).toHaveBeenCalledTimes(1);
@@ -152,7 +153,7 @@ describe("ExpressWebAdaptor", () => {
         }
       }
       
-      const jsonMethod = jest.spyOn(Response.prototype, 'send');
+      const jsonMethod = jest.spyOn(ElectraResponse.prototype, 'send');
       const route = adaptor.endpoint(StringTestEndpoint);
       await route(new MockExpressRequest() as any, new MockExpressResponse() as any, () => {});
       expect(jsonMethod).toHaveBeenCalledTimes(1);

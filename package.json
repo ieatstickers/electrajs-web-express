@@ -14,7 +14,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@electra/web": "^1.1.2"
+    "@electra/web": "^1.2.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

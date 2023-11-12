@@ -1,14 +1,14 @@
-import { ExpressRequestProvider } from "./ExpressRequestProvider";
+import { ElectraRequest } from "./ElectraRequest";
 import { MockExpressRequest } from "./Mock/MockExpressRequest";
 
-describe("ExpressRequestProvider", () => {
+describe("ElectraRequest", () => {
   
-  let provider: ExpressRequestProvider;
-  let mockRequest: MockExpressRequest;
+  let electraRequest: ElectraRequest;
+  let mockExpressRequest: MockExpressRequest;
   
   beforeEach(() => {
-    mockRequest = new MockExpressRequest();
-    provider = new ExpressRequestProvider(mockRequest as any);
+    mockExpressRequest = new MockExpressRequest();
+    electraRequest = new ElectraRequest(mockExpressRequest as any);
   })
   
   afterEach(() => {
@@ -17,7 +17,7 @@ describe("ExpressRequestProvider", () => {
   
   describe("constructor", () => {
     it("sets the express request", () => {
-      expect(provider['request']).toBe(mockRequest);
+      expect(electraRequest['request']).toBe(mockExpressRequest);
     });
   });
   
@@ -25,23 +25,23 @@ describe("ExpressRequestProvider", () => {
     
     describe("getAll", () => {
       it("returns all cookies", () => {
-        expect(provider.cookies().getAll()).toBe(mockRequest.cookies);
+        expect(electraRequest.cookies().getAll()).toBe(mockExpressRequest.cookies);
       });
     });
     
     describe("get", () => {
       it("returns the cookie value", () => {
-        expect(provider.cookies().get("exampleOne")).toBe(mockRequest.cookies.exampleOne);
+        expect(electraRequest.cookies().get("exampleOne")).toBe(mockExpressRequest.cookies.exampleOne);
       });
     });
     
     describe("has", () => {
       it("returns true if the cookie exists", () => {
-        expect(provider.cookies().has("exampleOne")).toBe(true);
+        expect(electraRequest.cookies().has("exampleOne")).toBe(true);
       });
       
       it("returns false if the cookie does not exist", () => {
-        expect(provider.cookies().has("exampleThree")).toBe(false);
+        expect(electraRequest.cookies().has("exampleThree")).toBe(false);
       });
     });
     
@@ -51,23 +51,23 @@ describe("ExpressRequestProvider", () => {
   
     describe("getAll", () => {
       it("returns all route params", () => {
-        expect(provider.routeParams().getAll()).toBe(mockRequest.params);
+        expect(electraRequest.routeParams().getAll()).toBe(mockExpressRequest.params);
       });
     });
     
     describe("get", () => {
       it("returns the route param value", () => {
-        expect(provider.routeParams().get("exampleOne")).toBe(mockRequest.params.exampleOne);
+        expect(electraRequest.routeParams().get("exampleOne")).toBe(mockExpressRequest.params.exampleOne);
       });
     });
     
     describe("has", () => {
       it("returns true if the route param exists", () => {
-        expect(provider.routeParams().has("exampleOne")).toBe(true);
+        expect(electraRequest.routeParams().has("exampleOne")).toBe(true);
       });
       
       it("returns false if the route param does not exist", () => {
-        expect(provider.routeParams().has("exampleThree")).toBe(false);
+        expect(electraRequest.routeParams().has("exampleThree")).toBe(false);
       });
     });
     
@@ -77,23 +77,23 @@ describe("ExpressRequestProvider", () => {
     
     describe("getAll", () => {
       it("returns all query params", () => {
-        expect(provider.queryParams().getAll()).toBe(mockRequest.query);
+        expect(electraRequest.queryParams().getAll()).toBe(mockExpressRequest.query);
       });
     });
     
     describe("get", () => {
       it("returns the query param value", () => {
-        expect(provider.queryParams().get("exampleOne")).toBe(mockRequest.query.exampleOne);
+        expect(electraRequest.queryParams().get("exampleOne")).toBe(mockExpressRequest.query.exampleOne);
       });
     });
     
     describe("has", () => {
       it("returns true if the query param exists", () => {
-        expect(provider.queryParams().has("exampleOne")).toBe(true);
+        expect(electraRequest.queryParams().has("exampleOne")).toBe(true);
       });
       
       it("returns false if the query param does not exist", () => {
-        expect(provider.queryParams().has("exampleThree")).toBe(false);
+        expect(electraRequest.queryParams().has("exampleThree")).toBe(false);
       });
     });
     
@@ -101,64 +101,64 @@ describe("ExpressRequestProvider", () => {
   
   describe("getBody", () => {
     it("returns the request body", () => {
-      expect(provider.getBody()).toBe(mockRequest.body);
+      expect(electraRequest.getBody()).toBe(mockExpressRequest.body);
     });
   });
   
   describe("getHost", () => {
     it("returns the request hostname", () => {
-      expect(provider.getHost()).toBe(mockRequest.hostname);
+      expect(electraRequest.getHost()).toBe(mockExpressRequest.hostname);
     });
   });
   
   describe("getHostname", () => {
     it("returns the request hostname", () => {
-      expect(provider.getHostname()).toBe(mockRequest.hostname);
+      expect(electraRequest.getHostname()).toBe(mockExpressRequest.hostname);
     });
   });
   
   describe("getIp", () => {
     it("returns the request ip", () => {
-      expect(provider.getIp()).toBe(mockRequest.ip);
+      expect(electraRequest.getIp()).toBe(mockExpressRequest.ip);
     });
   });
   
   describe("getPath", () => {
     it("returns the request path", () => {
-      expect(provider.getPath()).toBe(mockRequest.path);
+      expect(electraRequest.getPath()).toBe(mockExpressRequest.path);
     });
   });
   
   describe("getProtocol", () => {
     it("returns the request protocol", () => {
-      expect(provider.getProtocol()).toBe(mockRequest.protocol);
+      expect(electraRequest.getProtocol()).toBe(mockExpressRequest.protocol);
     });
   });
   
   describe("getHeader", () => {
     it("returns the request header value", () => {
-      expect(provider.getHeader("example")).toBe(mockRequest.get("example"));
+      expect(electraRequest.getHeader("example")).toBe(mockExpressRequest.get("example"));
     });
   });
   
   describe("isSecure", () => {
     it("returns the request secure value", () => {
-      expect(provider.isSecure()).toBe(mockRequest.secure);
+      expect(electraRequest.isSecure()).toBe(mockExpressRequest.secure);
     });
   });
   
   describe("get & set work correctly", () => {
     it("get returns undefined if no custom values set", () => {
-      expect(provider.get("test")).toBeUndefined();
+      expect(electraRequest.get("test")).toBeUndefined();
     });
     
     it("set returns provider instance", () => {
-      expect(provider.set("example", "value")).toBe(provider);
+      expect(electraRequest.set("example", "value")).toBe(electraRequest);
     });
     
     it("get returns the value set", () => {
-      provider.set("example", "value");
-      expect(provider.get("example")).toBe("value");
+      electraRequest.set("example", "value");
+      expect(electraRequest.get("example")).toBe("value");
     });
   });
   
