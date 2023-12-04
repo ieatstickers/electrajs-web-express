@@ -4,7 +4,14 @@
   "description": "Electra Web Express",
   "author": "Mike Burke",
   "license": "MIT",
-  "main": "dist/index.min.js",
+  "main": "dist/index.min.cjs",
+  "module": "dist/index.min.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/index.min.mjs",
+      "require": "./dist/index.min.cjs"
+    }
+  },
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*"
@@ -24,6 +31,7 @@
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-node-externals": "^3.0.0"
   }
 }
