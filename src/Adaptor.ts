@@ -8,6 +8,7 @@ import { AbstractEndpoint, RequestInterface, ResponseInterface } from "@electra/
 import { ElectraRequest } from "./ElectraRequest";
 import { ElectraResponse } from "./ElectraResponse";
 import { NextFunction } from "./Type/NextFunction";
+import { EventInterface } from "@electra/core";
 
 export class Adaptor
 {
@@ -55,7 +56,7 @@ export class Adaptor
     };
   }
   
-  public endpoint<EndpointClass extends new (payload: { [name: string]: any }, request: RequestInterface, response: ResponseInterface) => AbstractEndpoint<any, any>>(endpoint: EndpointClass): ExpressRequestHandler
+  public endpoint<EndpointClass extends new (payload: any, request: RequestInterface, response: ResponseInterface) => AbstractEndpoint<any, any>>(endpoint: EndpointClass): ExpressRequestHandler
   {
     return this.route(async (req: RequestInterface, res: ResponseInterface, next: NextFunction) => {
       
@@ -70,7 +71,7 @@ export class Adaptor
           req,
           res
         );
-        const response = await endpointInstance.execute();
+        const response = await (endpointInstance as unknown as EventInterface<any>).execute();
         
         if (response instanceof ElectraResponse)
         {

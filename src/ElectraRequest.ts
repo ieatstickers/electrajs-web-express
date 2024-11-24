@@ -24,32 +24,32 @@ export class ElectraRequest implements RequestInterface
   }
   
   public routeParams(): {
-    getAll(): { [key: string]: string };
-    get(name: string): string;
+    getAll(): Record<string, string>;
+    get(name: string): string | null;
     has(name: string): boolean;
   }
   {
     return {
-      getAll: () => this.request.params,
-      get: (name: string) => this.request.params[name],
-      has: (name: string) => !!this.request.params[name],
+      getAll: () => this.request.params as Record<string, string>,
+      get: (name: string) => this.request.params[name] || null,
+      has: (name: string) => this.request.params[name] != null,
     };
   }
   
   public queryParams(): {
     getAll(): ParsedQueryParams;
-    get(name: string): ParsedQueryParam;
+    get(name: string): ParsedQueryParam | null;
     has(name: string): boolean;
   }
   {
     return {
-      getAll: () => this.request.query,
-      get: (name: string) => this.request.query[name],
+      getAll: () => this.request.query as ParsedQueryParams,
+      get: (name: string) => (this.request.query as ParsedQueryParams)[name] || null,
       has: (name: string) => !!this.request.query[name],
     };
   }
   
-  public getBody(): { [key: string]: string | number | boolean }
+  public getBody(): any
   {
     return this.request.body;
   }
@@ -64,9 +64,9 @@ export class ElectraRequest implements RequestInterface
     return this.request.hostname;
   }
   
-  public getIp(): string
+  public getIp(): string | null
   {
-    return this.request.ip;
+    return this.request.ip || null;
   }
   
   public getPath(): string
@@ -79,9 +79,9 @@ export class ElectraRequest implements RequestInterface
     return this.request.protocol;
   }
   
-  public getHeader(name: string): string
+  public getHeader(name: string): string | null
   {
-    return this.request.get(name);
+    return this.request.get(name) || null;
   }
   
   public isSecure(): boolean

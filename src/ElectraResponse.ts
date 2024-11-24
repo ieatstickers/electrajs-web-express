@@ -15,7 +15,7 @@ export class ElectraResponse implements ResponseInterface
   {
     const responseHeaders: ResponseHeaders = {
       get: (name: string) => {
-        return this.response.get(name)
+        return this.response.get(name) || null
       },
       set: (name: string, value: string) => {
         this.response.set(name, value);
@@ -40,7 +40,7 @@ export class ElectraResponse implements ResponseInterface
     }
   ): void
   {
-    this.response.cookie(name, value, options);
+    this.response.cookie(name, value, options || {});
   }
   
   public download(
@@ -54,7 +54,8 @@ export class ElectraResponse implements ResponseInterface
   ): Promise<void>
   {
     return new Promise((resolve, reject) => {
-      const filename = options?.filename;
+      const filename = options?.filename || filepath.split("/").pop();
+      if (!filename) throw new Error("Cannot download file - no filename provided");
       delete options?.filename;
       
       this.response.download(
@@ -100,14 +101,14 @@ export class ElectraResponse implements ResponseInterface
   public sendFile(
     filepath: string,
     options?: {
-      maxAge?: number, // default: 0
-      lastModifiedEnabled?: boolean, // default: true
-      headers?: { [key: string]: string },
-      cacheControl?: boolean, // default: true
+      maxAge?: number | undefined, // default: 0
+      lastModifiedEnabled?: boolean | undefined, // default: true
+      headers?: Record<string, unknown>,
+      cacheControl?: boolean | undefined, // default: true
     }
   ): void
   {
-    this.response.sendFile(filepath, options);
+    this.response.sendFile(filepath, options || {});
   }
   
   public setStatus(statusCode: number): this

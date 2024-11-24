@@ -6,7 +6,5 @@ export declare class Adaptor {
     middleware(handler: (err: Error, req: RequestInterface, res: ResponseInterface, next: NextFunction) => void): (err: Error, req: ExpressRequest, res: ExpressResponse, next: ExpressNextFunction) => void;
     route(handler: (req: RequestInterface, res: ResponseInterface) => void): ExpressRequestHandler;
     route(handler: (req: RequestInterface, res: ResponseInterface, next: NextFunction) => void): ExpressRequestHandler;
-    endpoint<EndpointClass extends new (payload: {
-        [name: string]: any;
-    }, request: RequestInterface, response: ResponseInterface) => AbstractEndpoint<any, any>>(endpoint: EndpointClass): ExpressRequestHandler;
+    endpoint<EndpointClass extends new (payload: any, request: RequestInterface, response: ResponseInterface) => AbstractEndpoint<any, any>>(endpoint: EndpointClass): ExpressRequestHandler;
 }

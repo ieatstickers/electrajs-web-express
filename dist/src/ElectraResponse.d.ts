@@ -27,12 +27,10 @@ export declare class ElectraResponse implements ResponseInterface {
     redirect(urlOrStatusCode: string | number, url?: string): void;
     send(body?: any): void;
     sendFile(filepath: string, options?: {
-        maxAge?: number;
-        lastModifiedEnabled?: boolean;
-        headers?: {
-            [key: string]: string;
-        };
-        cacheControl?: boolean;
+        maxAge?: number | undefined;
+        lastModifiedEnabled?: boolean | undefined;
+        headers?: Record<string, unknown>;
+        cacheControl?: boolean | undefined;
     }): void;
     setStatus(statusCode: number): this;
 }
